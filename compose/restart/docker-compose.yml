@@ -1,0 +1,25 @@
+version: "3.8"
+
+# Create networks outside the services declaration
+networks:
+  network-example:
+    name: network-example
+    driver: bridge
+
+services:
+
+  # Always restart this container no matter what happen
+  mongodb-express-example:
+    container_name: mongodb-express-example
+    image: mongo-express:latest
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: rambokong
+      ME_CONFIG_MONGODB_ADMINPASSWORD: rambokong
+      ME_CONFIG_MONGODB_SERVER: mongodb-example
+    ports:
+      - "8081:8081"
+    networks:
+      - network-example
+    depends_on:
+      - mongodb-example

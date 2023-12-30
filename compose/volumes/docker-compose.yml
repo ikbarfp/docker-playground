@@ -1,0 +1,43 @@
+version: "3.8"
+
+# Create volumes outside the services declaration
+volumes:
+  mongo-data1:
+    name: mongo-data1
+
+  mongo-data2:
+    name: mongo-data2
+
+services:
+
+  # Use long syntax for volumes object declarations
+  # Use short syntax for ports object declarations
+  mongodb1:
+    container_name: mongodb1
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: rambokong
+      MONGO_INITDB_ROOT_PASSWORD: rambokong
+      MONGO_INITDB_DATABASE: admin
+    ports:
+      - "27017:27017"
+    volumes:
+      - type: volume
+        source: mongo-data1
+        target: /data/db
+        read_only: false
+
+  # Use short syntax for volumes object declaration
+  # Use short syntax for ports object declarations
+  mongodb2:
+    container_name: mongodb2
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: rambokong
+      MONGO_INITDB_ROOT_PASSWORD: rambokong
+      MONGO_INITDB_DATABASE: admin
+    ports:
+      - "27018:27017"
+    volumes:
+      - "mongo-data2:/data/db"
+

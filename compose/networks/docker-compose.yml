@@ -1,0 +1,22 @@
+version: "3.8"
+
+# Create networks outside the services declaration
+networks:
+  network1:
+    name: network1
+    driver: bridge
+
+# Create a service
+services:
+  mongodb-example:
+    container_name: mongodb-example
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: rambokong
+      MONGO_INITDB_ROOT_PASSWORD: rambokong
+      MONGO_INITDB_DATABASE: admin
+    ports:
+      - "27017:27017"
+    networks:
+      - network1
+

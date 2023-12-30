@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+
+  # Use long syntax for volumes object declarations
+  mongodb1:
+    container_name: mongodb1
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: rambokong
+      MONGO_INITDB_ROOT_PASSWORD: rambokong
+      MONGO_INITDB_DATABASE: example
+    volumes:
+      - type: bind
+        source: ./data-mongo2
+        target: /data/db
+        volume:
+          nocopy: true
+
+  # Use short syntax for volumes object declaration
+  mongodb2:
+    container_name: mongodb2
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: rambokong
+      MONGO_INITDB_ROOT_PASSWORD: rambokong
+      MONGO_INITDB_DATABASE: example
+    volumes:
+      - "./data-mongo1:/data/db"

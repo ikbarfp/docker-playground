@@ -1,0 +1,36 @@
+version: "3.8"
+
+# Create networks outside the services declaration
+networks:
+  network-example:
+    name: network-example
+    driver: bridge
+
+services:
+  #1. Container that need to created first
+  mongodb-example:
+    container_name: mongodb-example
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: rambokong
+      MONGO_INITDB_ROOT_PASSWORD: rambokong
+      MONGO_INITDB_DATABASE: admin
+    ports:
+      - "27017:27017"
+    networks:
+      - network-example
+
+  #2. Container that depends on other container
+  mongodb-express-example:
+    container_name: mongodb-express-example
+    image: mongo-express:latest
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: rambokong
+      ME_CONFIG_MONGODB_ADMINPASSWORD: rambokong
+      ME_CONFIG_MONGODB_SERVER: mongodb-example
+    ports:
+      - "8081:8081"
+    networks:
+      - network-example
+    depends_on:
+      - mongodb-example
