@@ -1,6 +1,5 @@
 .idea/
 
-/postgresql
-
-./data-mongo1/
-./data-mongo2/
+/postgresql/
+/compose/bind-mount/data-mongo1/
+/compose/bind-mount/data-mongo2/
